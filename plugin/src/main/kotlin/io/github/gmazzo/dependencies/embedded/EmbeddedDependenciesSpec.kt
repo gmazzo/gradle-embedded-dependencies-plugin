@@ -1,16 +1,10 @@
 package io.github.gmazzo.dependencies.embedded
 
 import org.gradle.api.Named
-import org.gradle.api.provider.Property
 import org.gradle.api.provider.SetProperty
 
 @JvmDefaultWithoutCompatibility
 interface EmbeddedDependenciesSpec : Named {
-
-    /**
-     * Whether to ember the dependencies transitively or just the explicit top-level ones.
-     */
-    val transitive: Property<Boolean>
 
     /**
      * Controls what classes and resources gets imported.
