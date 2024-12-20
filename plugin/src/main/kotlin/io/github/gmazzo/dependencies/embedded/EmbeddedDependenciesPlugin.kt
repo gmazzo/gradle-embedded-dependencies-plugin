@@ -24,10 +24,6 @@ class EmbeddedDependenciesPlugin @Inject constructor(
 
         extension.configureEach {
 
-            transitive
-                .convention(false) // by default, we only target dependencies explicitly declared
-                .finalizeValueOnRead()
-
             includes
                 .finalizeValueOnRead()
 
@@ -59,9 +55,6 @@ class EmbeddedDependenciesPlugin @Inject constructor(
 
             val classes = files()
                 .from(provider {
-
-                    config.isTransitive = spec.transitive.get()
-
                     config.map { dependency ->
                         archiveOperations.zipTree(dependency).matching {
                             include(spec.includes.get())
