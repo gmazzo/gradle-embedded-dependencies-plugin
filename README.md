@@ -15,4 +15,9 @@ plugins {
     id("io.github.gmazzo.dependencies.embedded") version "<latest>" 
 }
 
+dependencies {
+    embedded("org.apache.commons:commons-lang3:3.14.0")
+}
 ```
+
+Then the `jar` task will have the classes from `org.apache.commons:commons-lang3:3.14.0` (and it won't be a dependency when published)
