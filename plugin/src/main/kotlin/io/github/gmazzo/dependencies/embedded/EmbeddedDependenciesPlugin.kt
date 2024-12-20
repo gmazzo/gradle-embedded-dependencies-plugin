@@ -55,7 +55,7 @@ class EmbeddedDependenciesPlugin @Inject constructor(
 
             val classes = files()
                 .from(provider {
-                    config.map { dependency ->
+                    config.asFileTree.map { dependency ->
                         archiveOperations.zipTree(dependency).matching {
                             include(spec.includes.get())
                             exclude(spec.excludes.get())
