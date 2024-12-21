@@ -2,18 +2,15 @@ package io.github.gmazzo.dependencies.embedded
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.file.ArchiveOperations
 import org.gradle.api.file.ConfigurableFileCollection
+import org.gradle.api.file.DuplicatesStrategy
 import org.gradle.api.tasks.SourceSet
 import org.gradle.api.tasks.SourceSetContainer
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.domainObjectContainer
 import org.gradle.kotlin.dsl.the
-import javax.inject.Inject
 
-class EmbeddedDependenciesPlugin @Inject constructor(
-    private val archiveOperations: ArchiveOperations
-) : Plugin<Project> {
+class EmbeddedDependenciesPlugin : Plugin<Project> {
 
     override fun apply(target: Project): Unit = with(target) {
         apply(plugin = "java-base")
@@ -53,20 +50,22 @@ class EmbeddedDependenciesPlugin @Inject constructor(
                 }
             )
 
+            val classesDir = layout.buildDirectory.dir("embedded-dependencies/$name")
             val classes = files()
                 .from(provider {
-                    config.asFileTree.map { dependency ->
-                        archiveOperations.zipTree(dependency).matching {
-                            include(spec.includes.get())
-                            exclude(spec.excludes.get())
-                        }
+                    sync {
+                        duplicatesStrategy = DuplicatesStrategy.WARN
+                        config.asFileTree.forEach { from(zipTree(it)) }
+                        into(classesDir)
+                        include(spec.includes.get())
+                        exclude(spec.excludes.get())
                     }
+                    classesDir
                 })
                 .builtBy(config)
                 .apply { finalizeValueOnRead() }
 
             configurations.named(compileOnlyConfigurationName) { extendsFrom(config) }
-            configurations.named(runtimeOnlyConfigurationName) { extendsFrom(config) }
 
             (output.classesDirs as ConfigurableFileCollection).from(classes)
         }
