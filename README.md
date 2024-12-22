@@ -5,7 +5,7 @@
 [![Users](https://img.shields.io/badge/users_by-Sourcegraph-purple)](https://sourcegraph.com/search?q=content:io.github.gmazzo.dependencies.embedded+-repo:github.com/gmazzo/gradle-embedded-dependencies-plugin)
 
 # gradle-embedded-dependencies-plugin
-A Gradle plugin to embed dependencies (A.K.A. `fat` or `uber` jar) in the resulting `jar` outcome.
+A Gradle plugin to embed dependencies (A.K.A. `fat` or `uber` jar) in the produced `jar`.
 
 # Usage
 Apply the plugin:

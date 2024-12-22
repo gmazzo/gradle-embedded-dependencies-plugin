@@ -25,7 +25,7 @@ gradlePlugin {
             id = "io.github.gmazzo.dependencies.embedded"
             displayName = name
             implementationClass = "io.github.gmazzo.dependencies.embedded.EmbeddedDependenciesPlugin"
-            description = "Embed dependencies (A.K.A. `fat` or `uber` jar) in the resulting `jar` outcome"
+            description = "Embed dependencies (A.K.A. `fat` or `uber` jar) in the produced `jar`"
             tags.addAll("fat", "uber", "embedded", "dependencies")
         }
     }
