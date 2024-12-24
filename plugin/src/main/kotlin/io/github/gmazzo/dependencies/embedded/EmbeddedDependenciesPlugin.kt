@@ -52,7 +52,7 @@ class EmbeddedDependenciesPlugin : Plugin<Project> {
         the<SourceSetContainer>().configureEach {
             val spec = extension.maybeCreate(name)
 
-            val discriminator = "$path-${if (name == MAIN_SOURCE_SET_NAME) "embedded" else "embedded-$name"}"
+            val discriminator = if (name == MAIN_SOURCE_SET_NAME) "embedded" else "embedded-$name"
             val jarElements: LibraryElements = objects.named(JAR)
             val classesElements: LibraryElements = objects.named("$CLASSES+$discriminator")
             val resourcesElements: LibraryElements = objects.named("$RESOURCES+$discriminator")
