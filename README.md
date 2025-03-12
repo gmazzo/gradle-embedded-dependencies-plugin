@@ -1,6 +1,7 @@
 ![GitHub](https://img.shields.io/github/license/gmazzo/gradle-embedded-dependencies-plugin)
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.gmazzo.dependencies.embedded/io.github.gmazzo.dependencies.embedded.gradle.plugin)](https://central.sonatype.com/artifact/io.github.gmazzo.dependencies.embedded/io.github.gmazzo.dependencies.embedded.gradle.plugin)
 [![Gradle Plugin Portal](https://img.shields.io/gradle-plugin-portal/v/io.github.gmazzo.dependencies.embedded)](https://plugins.gradle.org/plugin/io.github.gmazzo.dependencies.embedded)
-[![Build Status](https://github.com/gmazzo/gradle-embedded-dependencies-plugin/actions/workflows/build.yaml/badge.svg)](https://github.com/gmazzo/gradle-embedded-dependencies-plugin/actions/workflows/build.yaml)
+[![Build Status](https://github.com/gmazzo/gradle-embedded-dependencies-plugin/actions/workflows/ci-cd.yaml/badge.svg)](https://github.com/gmazzo/gradle-embedded-dependencies-plugin/actions/workflows/ci-cd.yaml)
 [![Coverage](https://codecov.io/gh/gmazzo/gradle-embedded-dependencies-plugin/branch/main/graph/badge.svg?token=D5cDiPWvcS)](https://codecov.io/gh/gmazzo/gradle-embedded-dependencies-plugin)
 [![Users](https://img.shields.io/badge/users_by-Sourcegraph-purple)](https://sourcegraph.com/search?q=content:io.github.gmazzo.dependencies.embedded+-repo:github.com/gmazzo/gradle-embedded-dependencies-plugin)
 
