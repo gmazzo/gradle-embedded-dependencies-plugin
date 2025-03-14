@@ -1,5 +1,6 @@
 package io.github.gmazzo.dependencies.embedded
 
+import javax.inject.Inject
 import org.gradle.api.artifacts.transform.InputArtifact
 import org.gradle.api.artifacts.transform.TransformAction
 import org.gradle.api.artifacts.transform.TransformOutputs
@@ -13,7 +14,6 @@ import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.PathSensitive
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.work.DisableCachingByDefault
-import javax.inject.Inject
 
 @DisableCachingByDefault(because = "Not worth caching")
 abstract class ExtractJARTransform @Inject constructor(

@@ -27,7 +27,7 @@ interface EmbeddedDependenciesSpec : Named {
      * META-INF/*.RSA
      * META-INF/maven/**
      * META-INF/versions/*/module-info.class
-     ```
+     * ```
      */*/*/*/*/*/*/
     val excludes: SetProperty<String>
 

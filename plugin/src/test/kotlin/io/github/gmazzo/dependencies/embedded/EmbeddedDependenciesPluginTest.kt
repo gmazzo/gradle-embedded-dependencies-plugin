@@ -18,15 +18,18 @@ class EmbeddedDependenciesPluginTest {
         "kotlin, embedded|testEmbedded",
     )
     @ParameterizedTest
-    fun `plugin can be applied`(plugin: String?, expectedConfigs: String?): Unit = with(ProjectBuilder.builder().build()) {
-        apply(plugin = "io.github.gmazzo.dependencies.embedded")
-        if (plugin != null) { apply(plugin = plugin) }
+    fun `plugin can be applied`(plugin: String?, expectedConfigs: String?): Unit =
+        with(ProjectBuilder.builder().build()) {
+            apply(plugin = "io.github.gmazzo.dependencies.embedded")
+            if (plugin != null) {
+                apply(plugin = plugin)
+            }
 
-        the<SourceSetContainer>().maybeCreate("customSS")
+            the<SourceSetContainer>().maybeCreate("customSS")
 
-        val expectedConfigs = expectedConfigs?.split('|')?.toSet().orEmpty() + "customSSEmbedded"
+            val expectedConfigs = expectedConfigs?.split('|')?.toSet().orEmpty() + "customSSEmbedded"
 
-        assertEquals(expectedConfigs, configurations.names.intersect(expectedConfigs))
-    }
+            assertEquals(expectedConfigs, configurations.names.intersect(expectedConfigs))
+        }
 
 }
