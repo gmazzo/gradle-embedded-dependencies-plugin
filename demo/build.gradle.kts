@@ -15,6 +15,10 @@ dependencies {
     testEmbedded(libs.demo.commons.collections4)
 }
 
+configurations.embedded.embedding {
+    repackage("(org\\.apache\\.commons)\\.(.*)".toRegex(), "my.$1.repackaged.$2")
+}
+
 testing.suites.withType<JvmTestSuite> {
     useJUnitJupiter()
 }

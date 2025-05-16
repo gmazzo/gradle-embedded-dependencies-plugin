@@ -1,6 +1,6 @@
 package io.github.gmazzo.dependencies.embedded.demo
 
-import org.apache.commons.lang3.StringUtils;
+import my.org.apache.commons.repackaged.lang3.StringUtils;
 
 object Bar {
 
