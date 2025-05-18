@@ -71,6 +71,7 @@ dependencies {
         plugin.map { "${it.pluginId}:${it.pluginId}.gradle.plugin:${it.version}" }
 
     compileOnly(gradleKotlinDsl())
+    implementation(libs.asm)
 
     testImplementation(gradleKotlinDsl())
     testImplementation(gradleTestKit())

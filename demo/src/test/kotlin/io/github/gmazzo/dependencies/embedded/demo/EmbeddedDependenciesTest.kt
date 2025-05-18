@@ -8,7 +8,7 @@ class EmbeddedDependenciesTest {
 
     @ParameterizedTest
     @CsvSource(
-        "org.apache.commons.lang3.StringUtils",
+        "my.org.apache.commons.repackaged.lang3.StringUtils",
         "org.apache.commons.collections4.ArrayUtils",
     )
     fun `classes should be reachable`(className: String) {
