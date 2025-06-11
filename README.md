@@ -5,6 +5,8 @@
 [![Coverage](https://codecov.io/gh/gmazzo/gradle-embedded-dependencies-plugin/branch/main/graph/badge.svg?token=D5cDiPWvcS)](https://codecov.io/gh/gmazzo/gradle-embedded-dependencies-plugin)
 [![Users](https://img.shields.io/badge/users_by-Sourcegraph-purple)](https://sourcegraph.com/search?q=content:io.github.gmazzo.dependencies.embedded+-repo:github.com/gmazzo/gradle-embedded-dependencies-plugin)
 
+[![Contributors](https://contrib.rocks/image?repo=gmazzo/gradle-embedded-dependencies-plugin)](https://github.com/gmazzo/gradle-embedded-dependencies-plugin/graphs/contributors)
+
 # gradle-embedded-dependencies-plugin
 A Gradle plugin to embed dependencies (A.K.A. `fat` or `uber` jar) in the produced `jar`. It can optionally repackage the classes
 
