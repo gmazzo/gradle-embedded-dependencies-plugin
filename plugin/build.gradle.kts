@@ -14,7 +14,7 @@ description = "Embed dependencies (A.K.A. `fat` or `uber` jar) in the produced `
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
 samWithReceiver.annotation(HasImplicitReceiver::class.qualifiedName!!)
-kotlin.compilerOptions.freeCompilerArgs = listOf("-Xjvm-default=all")
+kotlin.compilerOptions.freeCompilerArgs = listOf("-Xjvm-default=all-compatibility")
 
 val originUrl = providers
     .exec { commandLine("git", "remote", "get-url", "origin") }
