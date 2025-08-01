@@ -1,10 +1,10 @@
 package io.github.gmazzo.dependencies.embedded
 
 import org.gradle.api.tasks.SourceSetContainer
-import org.gradle.internal.impldep.junit.framework.TestCase.assertEquals
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.the
 import org.gradle.testfixtures.ProjectBuilder
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
