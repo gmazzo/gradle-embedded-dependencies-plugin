@@ -4,7 +4,7 @@ kotlin = "2.2.20"
 
 [libraries]
 asm = { module = "org.ow2.asm:asm-commons", version = "9.8" }
-demo-commons-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.18.0" }
+demo-commons-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.19.0" }
 demo-commons-collections4 = { module = "org.apache.commons:commons-collections4", version = "4.5.0" }
 junit-bom = { module = "org.junit:junit-bom", version = "5.13.4" }
 junit-params = { module = "org.junit.jupiter:junit-jupiter-params" }
