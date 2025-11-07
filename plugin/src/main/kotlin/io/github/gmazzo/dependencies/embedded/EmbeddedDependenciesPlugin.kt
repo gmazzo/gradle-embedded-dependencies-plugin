@@ -73,7 +73,6 @@ class EmbeddedDependenciesPlugin : Plugin<Project> {
                 configurations.create(if (name == MAIN_SOURCE_SET_NAME) "embedded" else "${name}Embedded") config@{
                     isCanBeResolved = true
                     isCanBeConsumed = false
-                    isVisible = false
                     attributes {
                         attribute(CATEGORY_ATTRIBUTE, objects.named(LIBRARY))
                         attribute(LIBRARY_ELEMENTS_ATTRIBUTE, jarElements)

@@ -5,7 +5,6 @@ import org.gradle.api.Named
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.SetProperty
 
-@JvmDefaultWithoutCompatibility
 interface EmbeddedDependenciesSpec : Named {
 
     /**
