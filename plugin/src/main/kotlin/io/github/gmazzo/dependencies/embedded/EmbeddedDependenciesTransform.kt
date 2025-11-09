@@ -32,11 +32,11 @@ import org.objectweb.asm.commons.MethodRemapper
 import org.objectweb.asm.commons.SimpleRemapper
 
 @CacheableTransform
-abstract class EmbeddedDependenciesTransform : TransformAction<EmbeddedDependenciesTransform.Params> {
+public abstract class EmbeddedDependenciesTransform : TransformAction<EmbeddedDependenciesTransform.Params> {
 
     @get:PathSensitive(PathSensitivity.NAME_ONLY)
     @get:InputArtifact
-    abstract val inputArtifact: Provider<FileSystemLocation>
+    public abstract val inputArtifact: Provider<FileSystemLocation>
 
     private val mappings by lazy { parameters.mappings.get().asSequence() }
 
@@ -143,16 +143,16 @@ abstract class EmbeddedDependenciesTransform : TransformAction<EmbeddedDependenc
 
     }
 
-    interface Params : TransformParameters {
+    public interface Params : TransformParameters {
 
         @get:Input
-        val includes: SetProperty<String>
+        public val includes: SetProperty<String>
 
         @get:Input
-        val excludes: SetProperty<String>
+        public val excludes: SetProperty<String>
 
         @get:Input
-        val mappings: ListProperty<Repackage>
+        public val mappings: ListProperty<Repackage>
 
     }
 
