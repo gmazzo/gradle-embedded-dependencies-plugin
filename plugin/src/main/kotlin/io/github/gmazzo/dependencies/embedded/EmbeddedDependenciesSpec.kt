@@ -5,21 +5,21 @@ import org.gradle.api.Named
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.SetProperty
 
-interface EmbeddedDependenciesSpec : Named {
+public interface EmbeddedDependenciesSpec : Named {
 
     /**
      * Controls what classes and resources get imported.
      *
      * @see org.gradle.api.tasks.util.PatternFilterable.include
      */
-    val includes: SetProperty<String>
+    public val includes: SetProperty<String>
 
     /**
      * Adds an ANT-style pattern to the list of included classes and resources.
      *
      * @see org.gradle.api.tasks.util.PatternFilterable.include
      */
-    fun include(vararg pattern: String) = apply {
+    public fun include(vararg pattern: String): EmbeddedDependenciesSpec = apply {
         includes.addAll(*pattern)
     }
 
@@ -41,26 +41,26 @@ interface EmbeddedDependenciesSpec : Named {
      *
      * @see org.gradle.api.tasks.util.PatternFilterable.exclude
      */
-    val excludes: SetProperty<String>
+    public val excludes: SetProperty<String>
 
     /**
      * Adds an ANT-style pattern to the list of excluded classes and resources.
      *
      * @see org.gradle.api.tasks.util.PatternFilterable.exclude
      */
-    fun exclude(vararg pattern: String) = apply {
+    public fun exclude(vararg pattern: String): EmbeddedDependenciesSpec = apply {
         excludes.addAll(*pattern)
     }
 
     /**
      * Controls how classes get repackaged.
      */
-    val repackages: ListProperty<Repackage>
+    public val repackages: ListProperty<Repackage>
 
     /**
      * Repackages classes the given [classNamePattern] to the given [replacement].
      */
-    fun repackage(classNamePattern: Regex, replacement: String) = Repackage(
+    public fun repackage(classNamePattern: Regex, replacement: String): EmbeddedDependenciesSpec.Repackage = Repackage(
         regex = classNamePattern,
         replacement = replacement,
     ).also(repackages::add)
@@ -68,10 +68,10 @@ interface EmbeddedDependenciesSpec : Named {
     /**
      * Repackages classes the given [classNamePrefix] to the given [replacement].
      */
-    fun repackage(classNamePrefix: String, replacement: String) =
+    public fun repackage(classNamePrefix: String, replacement: String): EmbeddedDependenciesSpec.Repackage =
         repackage("^${Regex.escape(classNamePrefix)}".toRegex(), replacement)
 
-    data class Repackage(
+    public data class Repackage(
         val regex: Regex,
         val replacement: String,
         var forClasses: Boolean = true,

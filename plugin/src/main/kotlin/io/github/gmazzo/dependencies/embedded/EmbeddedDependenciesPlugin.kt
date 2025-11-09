@@ -21,7 +21,7 @@ import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.registerTransform
 import org.gradle.kotlin.dsl.the
 
-class EmbeddedDependenciesPlugin : Plugin<Project> {
+public class EmbeddedDependenciesPlugin : Plugin<Project> {
 
     override fun apply(target: Project): Unit = with(target) {
         apply(plugin = "java-base")
