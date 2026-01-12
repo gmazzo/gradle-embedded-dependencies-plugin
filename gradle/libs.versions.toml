@@ -6,7 +6,7 @@ kotlin = "2.3.0"
 asm = { module = "org.ow2.asm:asm-commons", version = "9.9.1" }
 demo-commons-lang3 = { module = "org.apache.commons:commons-lang3", version = "3.20.0" }
 demo-commons-collections4 = { module = "org.apache.commons:commons-collections4", version = "4.5.0" }
-junit-bom = { module = "org.junit:junit-bom", version = "6.0.1" }
+junit-bom = { module = "org.junit:junit-bom", version = "6.0.2" }
 junit-params = { module = "org.junit.jupiter:junit-jupiter-params" }
 
 [plugins]
