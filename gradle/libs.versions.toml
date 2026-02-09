@@ -1,6 +1,6 @@
 [versions]
 java = "17"
-kotlin = "2.3.0"
+kotlin = "2.3.10"
 
 [libraries]
 asm = { module = "org.ow2.asm:asm-commons", version = "9.9.1" }
