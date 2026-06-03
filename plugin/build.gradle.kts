@@ -21,7 +21,7 @@ java.toolchain.languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get
 samWithReceiver.annotation(HasImplicitReceiver::class.qualifiedName!!)
 
 kotlin {
-    abiValidation.enabled = true
+    abiValidation()
     compilerOptions.jvmDefault = JvmDefaultMode.NO_COMPATIBILITY
     explicitApi()
 }
@@ -112,10 +112,6 @@ tasks.withType<PublishToMavenRepository>().configureEach {
 
 tasks.validatePlugins {
     enableStricterValidation = true
-}
-
-tasks.check {
-    dependsOn(tasks.checkLegacyAbi)
 }
 
 tasks.publishPlugins {
