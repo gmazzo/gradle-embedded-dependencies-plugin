@@ -16,6 +16,7 @@ import org.gradle.api.artifacts.transform.TransformAction
 import org.gradle.api.artifacts.transform.TransformOutputs
 import org.gradle.api.artifacts.transform.TransformParameters
 import org.gradle.api.file.FileSystemLocation
+import org.gradle.api.logging.Logging
 import org.gradle.api.provider.ListProperty
 import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
@@ -36,6 +37,8 @@ import org.objectweb.asm.commons.SimpleRemapper
 @CacheableTransform
 internal abstract class EmbeddedDependenciesTransform : TransformAction<EmbeddedDependenciesTransform.Params> {
 
+    private val logger = Logging.getLogger(EmbeddedDependenciesTransform::class.java)
+
     @get:PathSensitive(PathSensitivity.NAME_ONLY)
     @get:InputArtifact
     abstract val inputArtifact: Provider<FileSystemLocation>
@@ -46,6 +49,13 @@ internal abstract class EmbeddedDependenciesTransform : TransformAction<Embedded
         val output = outputs
             .file("${input.nameWithoutExtension}-repackaged$suffix.${input.extension}")
             .toPath()
+
+        if (!Files.isRegularFile(input)) {
+            // TODO long standing issue with local modules: https://github.com/gradle/gradle/issues/19707
+            logger.warn("Missing $input. If it's a local module dependency, support is limited")
+            Files.createFile(output)
+            return
+        }
 
         FileSystems.newFileSystem(input).use { inFS ->
             FileSystems.newFileSystem(output, mapOf("create" to "true")).use { outFS ->
