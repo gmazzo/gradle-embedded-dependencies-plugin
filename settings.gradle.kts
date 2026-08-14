@@ -13,3 +13,4 @@ rootProject.name = "gradle-embedded-dependencies-plugin"
 
 includeBuild("plugin")
 include("demo")
+include("demo:lib")

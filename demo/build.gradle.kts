@@ -11,12 +11,14 @@ dependencies {
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.junit.params)
 
+    embedded(project("lib")) { isTransitive = false }
     embedded(libs.demo.commons.lang3)
     testEmbedded(libs.demo.commons.collections4)
 }
 
 configurations.embedded.embedding {
     repackage("(org\\.apache\\.commons)\\.(.*)".toRegex(), "my.$1.repackaged.$2")
+    repackage("io\\.github\\.gmazzo\\.dependencies\\.embedded\\.demo\\.(.*)".toRegex(), "local.$1")
 }
 
 testing.suites.withType<JvmTestSuite> {

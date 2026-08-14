@@ -1,6 +1,8 @@
 package io.github.gmazzo.dependencies.embedded.demo
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -15,6 +17,12 @@ class EmbeddedDependenciesTest {
         val exists = runCatching { Class.forName(className) }.isSuccess
 
         assertTrue(exists)
+    }
+
+    @Test
+    fun checkBar() {
+        assertEquals("Hello, world!", Bar.hello)
+        assertEquals("libValue", Bar.libValue)
     }
 
 }
