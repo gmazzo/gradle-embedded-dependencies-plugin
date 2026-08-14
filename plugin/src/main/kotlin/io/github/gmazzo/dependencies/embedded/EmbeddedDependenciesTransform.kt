@@ -17,6 +17,7 @@ import org.gradle.api.artifacts.transform.TransformOutputs
 import org.gradle.api.artifacts.transform.TransformParameters
 import org.gradle.api.file.FileSystemLocation
 import org.gradle.api.provider.ListProperty
+import org.gradle.api.provider.Property
 import org.gradle.api.provider.Provider
 import org.gradle.api.provider.SetProperty
 import org.gradle.api.tasks.Input
@@ -27,22 +28,24 @@ import org.objectweb.asm.ClassReader.EXPAND_FRAMES
 import org.objectweb.asm.ClassVisitor
 import org.objectweb.asm.ClassWriter
 import org.objectweb.asm.MethodVisitor
+import org.objectweb.asm.Opcodes
 import org.objectweb.asm.commons.ClassRemapper
 import org.objectweb.asm.commons.MethodRemapper
 import org.objectweb.asm.commons.SimpleRemapper
 
 @CacheableTransform
-public abstract class EmbeddedDependenciesTransform : TransformAction<EmbeddedDependenciesTransform.Params> {
+internal abstract class EmbeddedDependenciesTransform : TransformAction<EmbeddedDependenciesTransform.Params> {
 
     @get:PathSensitive(PathSensitivity.NAME_ONLY)
     @get:InputArtifact
-    public abstract val inputArtifact: Provider<FileSystemLocation>
-
-    private val mappings by lazy { parameters.mappings.get().asSequence() }
+    abstract val inputArtifact: Provider<FileSystemLocation>
 
     override fun transform(outputs: TransformOutputs) {
         val input = inputArtifact.get().asFile.toPath()
-        val output = outputs.file("${input.nameWithoutExtension}-repackaged.${input.extension}").toPath()
+        val suffix = if (parameters.forResources.get()) "-resources" else ""
+        val output = outputs
+            .file("${input.nameWithoutExtension}-repackaged$suffix.${input.extension}")
+            .toPath()
 
         FileSystems.newFileSystem(input).use { inFS ->
             FileSystems.newFileSystem(output, mapOf("create" to "true")).use { outFS ->
@@ -55,11 +58,14 @@ public abstract class EmbeddedDependenciesTransform : TransformAction<EmbeddedDe
                         if (includes.isNotEmpty() && !includes.any { it.matches(file) }) continue
                         if (excludes.any { it.matches(file) }) continue
 
+                        val isResource = file.extension != "class"
+                        if (isResource != parameters.forResources.get()) continue
+
                         val outFile = outFS.outputFile(file.relativeTo(root))
 
                         outFile.parent?.let(Files::createDirectories)
                         when {
-                            file.extension == "class" -> repackageClass(file, outFile)
+                            !isResource -> repackageClass(file, outFile)
                             file.pathString.matches("^META-INF/(MANIFEST.MF$|services/|gradle-plugins/)".toRegex()) ->
                                 repackageResources(file, outFile)
 
@@ -97,7 +103,7 @@ public abstract class EmbeddedDependenciesTransform : TransformAction<EmbeddedDe
         Files.write(into, newLines)
     }
 
-    private fun repackage(value: String, forTarget: Repackage.() -> Boolean) = mappings
+    private fun repackage(value: String, forTarget: Repackage.() -> Boolean) = parameters.mappings.get()
         .filter(forTarget)
         .map { it.regex.replaceFirst(value, it.replacement) }
         .firstOrNull { it != value }
@@ -132,7 +138,7 @@ public abstract class EmbeddedDependenciesTransform : TransformAction<EmbeddedDe
 
     }
 
-    private inner class Mapper : SimpleRemapper(emptyMap()) {
+    private inner class Mapper : SimpleRemapper(Opcodes.ASM4, emptyMap()) {
 
         override fun map(key: String): String? {
             if (key.contains(".")) return null // do not rename fields and methods
@@ -143,16 +149,19 @@ public abstract class EmbeddedDependenciesTransform : TransformAction<EmbeddedDe
 
     }
 
-    public interface Params : TransformParameters {
+    interface Params : TransformParameters {
 
         @get:Input
-        public val includes: SetProperty<String>
+        val forResources: Property<Boolean>
 
         @get:Input
-        public val excludes: SetProperty<String>
+        val includes: SetProperty<String>
 
         @get:Input
-        public val mappings: ListProperty<Repackage>
+        val excludes: SetProperty<String>
+
+        @get:Input
+        val mappings: ListProperty<Repackage>
 
     }
 
