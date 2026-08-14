@@ -37,18 +37,6 @@ public final class io/github/gmazzo/dependencies/embedded/EmbeddedDependenciesSp
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract class io/github/gmazzo/dependencies/embedded/EmbeddedDependenciesTransform : org/gradle/api/artifacts/transform/TransformAction {
-	public fun <init> ()V
-	public abstract fun getInputArtifact ()Lorg/gradle/api/provider/Provider;
-	public fun transform (Lorg/gradle/api/artifacts/transform/TransformOutputs;)V
-}
-
-public abstract interface class io/github/gmazzo/dependencies/embedded/EmbeddedDependenciesTransform$Params : org/gradle/api/artifacts/transform/TransformParameters {
-	public abstract fun getExcludes ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getIncludes ()Lorg/gradle/api/provider/SetProperty;
-	public abstract fun getMappings ()Lorg/gradle/api/provider/ListProperty;
-}
-
 public final class org/gradle/kotlin/dsl/EmbeddedDependenciesDSLKt {
 	public static final fun embedding (Lorg/gradle/api/NamedDomainObjectProvider;Lorg/gradle/api/Action;)V
 	public static final fun embedding (Lorg/gradle/api/artifacts/Configuration;Lorg/gradle/api/Action;)Lorg/gradle/api/artifacts/Configuration;
