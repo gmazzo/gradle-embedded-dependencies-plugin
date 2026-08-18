@@ -94,6 +94,7 @@ testing.suites.withType<JvmTestSuite> {
 
 tasks.test {
     finalizedBy(tasks.jacocoTestReport)
+    systemProperty("TEMP_DIR", temporaryDir)
 }
 
 tasks.jacocoTestReport {
