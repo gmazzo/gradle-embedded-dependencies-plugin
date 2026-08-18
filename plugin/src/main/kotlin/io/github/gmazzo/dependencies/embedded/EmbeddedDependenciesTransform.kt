@@ -50,13 +50,6 @@ internal abstract class EmbeddedDependenciesTransform : TransformAction<Embedded
             .file("${input.nameWithoutExtension}-repackaged$suffix.${input.extension}")
             .toPath()
 
-        if (!Files.isRegularFile(input)) {
-            // TODO long standing issue with local modules: https://github.com/gradle/gradle/issues/19707
-            logger.warn("Missing $input. If it's a local module dependency, support is limited")
-            Files.createFile(output)
-            return
-        }
-
         FileSystems.newFileSystem(input).use { inFS ->
             FileSystems.newFileSystem(output, mapOf("create" to "true")).use { outFS ->
                 val includes = parameters.includes.get().map { inFS.getPathMatcher("glob:/$it") }
