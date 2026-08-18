@@ -92,6 +92,7 @@ public class EmbeddedDependenciesPlugin : Plugin<Project> {
 
             val embeddedClasses = config.incoming
                 .artifactView {
+                    isLenient = isGradleSync // TODO workaround of https://github.com/gradle/gradle/issues/19707
                     attributes {
                         attribute(CATEGORY_ATTRIBUTE, objects.named(LIBRARY))
                         attribute(LIBRARY_ELEMENTS_ATTRIBUTE, repackagedClassesElements)
@@ -101,6 +102,7 @@ public class EmbeddedDependenciesPlugin : Plugin<Project> {
 
             val embeddedResources = config.incoming
                 .artifactView {
+                    isLenient = isGradleSync // TODO workaround of https://github.com/gradle/gradle/issues/19707
                     attributes {
                         attribute(CATEGORY_ATTRIBUTE, objects.named(LIBRARY))
                         attribute(LIBRARY_ELEMENTS_ATTRIBUTE, repackagedResourcesElements)
@@ -116,5 +118,8 @@ public class EmbeddedDependenciesPlugin : Plugin<Project> {
         }
 
     }
+
+    private val isGradleSync
+        get() = System.getProperty("idea.sync.active") == "true"
 
 }
