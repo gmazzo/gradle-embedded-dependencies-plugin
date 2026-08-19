@@ -54,6 +54,9 @@ public class EmbeddedDependenciesPlugin : Plugin<Project> {
 
         }
 
+        val prepareKotlinIdeaImport =
+            if (isGradleSync) tasks.maybeCreate("prepareKotlinIdeaImport") else null
+
         the<SourceSetContainer>().configureEach {
             val spec = specs.maybeCreate(name)
 
@@ -115,6 +118,7 @@ public class EmbeddedDependenciesPlugin : Plugin<Project> {
             tasks.named<AbstractCopyTask>(processResourcesTaskName) {
                 from(embeddedResources)
             }
+            prepareKotlinIdeaImport?.dependsOn(embeddedClasses, embeddedResources)
         }
 
     }
