@@ -14,10 +14,12 @@ import org.gradle.api.plugins.ExtensionAware
 import org.gradle.api.tasks.AbstractCopyTask
 import org.gradle.api.tasks.SourceSet.MAIN_SOURCE_SET_NAME
 import org.gradle.api.tasks.SourceSetContainer
+import org.gradle.api.tasks.Sync
 import org.gradle.kotlin.dsl.add
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.domainObjectContainer
 import org.gradle.kotlin.dsl.named
+import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.registerTransform
 import org.gradle.kotlin.dsl.the
 
@@ -113,11 +115,17 @@ public class EmbeddedDependenciesPlugin : Plugin<Project> {
                 }
                 .files
 
-            dependencies.add(compileOnlyConfigurationName, embeddedClasses)
-            (output.classesDirs as ConfigurableFileCollection).from(embeddedClasses)
-            tasks.named<AbstractCopyTask>(processResourcesTaskName) {
-                from(embeddedResources)
+            val taskPrefix = discriminator
+                .replace("(?<=^|-)(\\w)".toRegex()) { it.groupValues[0].uppercase() }
+            val embeddedClassesTask = tasks.register<Sync>("process${taskPrefix}Classes") {
+                from(embeddedClasses)
+                into(temporaryDir)
             }
+
+            dependencies.add(compileOnlyConfigurationName, embeddedClasses)
+            (output.classesDirs as ConfigurableFileCollection).from(embeddedClassesTask.map { fileTree(it.destinationDir) })
+
+            tasks.named<AbstractCopyTask>(processResourcesTaskName) { from(embeddedResources) }
             prepareKotlinIdeaImport?.dependsOn(embeddedClasses, embeddedResources)
         }
 
