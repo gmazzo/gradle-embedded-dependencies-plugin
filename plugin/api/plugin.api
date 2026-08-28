@@ -37,6 +37,12 @@ public final class io/github/gmazzo/dependencies/embedded/EmbeddedDependenciesSp
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract class io/github/gmazzo/dependencies/embedded/ExtractClassesTask : org/gradle/api/DefaultTask {
+	public fun <init> ()V
+	public abstract fun getDestinationDir ()Lorg/gradle/api/file/DirectoryProperty;
+	public abstract fun getFrom ()Lorg/gradle/api/file/ConfigurableFileCollection;
+}
+
 public final class org/gradle/kotlin/dsl/EmbeddedDependenciesDSLKt {
 	public static final fun embedding (Lorg/gradle/api/NamedDomainObjectProvider;Lorg/gradle/api/Action;)V
 	public static final fun embedding (Lorg/gradle/api/artifacts/Configuration;Lorg/gradle/api/Action;)Lorg/gradle/api/artifacts/Configuration;

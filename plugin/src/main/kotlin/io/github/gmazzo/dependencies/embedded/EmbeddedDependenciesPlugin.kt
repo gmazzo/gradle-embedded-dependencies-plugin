@@ -116,14 +116,13 @@ public class EmbeddedDependenciesPlugin : Plugin<Project> {
                 .files
 
             val taskPrefix = discriminator
-                .replace("(?<=^|-)(\\w)".toRegex()) { it.groupValues[0].uppercase() }
-            val embeddedClassesTask = tasks.register<Sync>("process${taskPrefix}Classes") {
-                from(embeddedClasses)
-                into(temporaryDir)
+                .replace("(?:^|-)(\\w)".toRegex()) { it.groupValues[1].uppercase() }
+            val embeddedClassesTask = tasks.register<ExtractClassesTask>("extract${taskPrefix}Classes") {
+                from.from(embeddedClasses)
             }
 
             dependencies.add(compileOnlyConfigurationName, embeddedClasses)
-            (output.classesDirs as ConfigurableFileCollection).from(embeddedClassesTask.map { fileTree(it.destinationDir) })
+            (output.classesDirs as ConfigurableFileCollection).from(embeddedClassesTask.map { it.destinationDir })
 
             tasks.named<AbstractCopyTask>(processResourcesTaskName) { from(embeddedResources) }
             prepareKotlinIdeaImport?.dependsOn(embeddedClasses, embeddedResources)
