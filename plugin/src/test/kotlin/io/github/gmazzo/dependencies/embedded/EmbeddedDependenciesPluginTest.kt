@@ -56,6 +56,7 @@ class EmbeddedDependenciesPluginTest {
             .resolve(buildArg ?: "default")
             .apply { deleteRecursively(); mkdirs() }
 
+        File("../gradle.properties").copyTo(projectDir.resolve("gradle.properties"))
         File("../demo").copyRecursively(projectDir.resolve("demo"))
         File("../gradle/libs.versions.toml").copyTo(projectDir.resolve("gradle/libs.versions.toml"))
 
