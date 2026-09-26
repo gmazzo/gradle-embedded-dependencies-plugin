@@ -1,5 +1,6 @@
 @file:OptIn(ExperimentalAbiValidation::class)
 
+import org.gradle.plugin.compatibility.compatibility
 import org.jetbrains.kotlin.gradle.dsl.JvmDefaultMode
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 
@@ -40,6 +41,12 @@ gradlePlugin {
             displayName = name
             implementationClass = "io.github.gmazzo.dependencies.embedded.EmbeddedDependenciesPlugin"
             description = project.description
+            compatibility {
+                features {
+                    configurationCache = true
+                    isolatedProjects = true
+                }
+            }
             tags.addAll("fat", "uber", "embedded", "dependencies")
         }
     }
